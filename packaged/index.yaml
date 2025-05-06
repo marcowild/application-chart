@@ -1,0 +1,25 @@
+apiVersion: v1
+entries:
+  application:
+  - apiVersion: v2
+    created: "2025-05-06T08:52:15.75901+02:00"
+    description: Generic helm chart for all kind of applications
+    digest: 00ccdc0b8e7452337b76bfc4ba7f41a615a42014e9c5e51f0cd585abc64bc61e
+    home: https://github.com/stakater/application
+    icon: https://github.com/stakater/ForecastleIcons/blob/master/stakater.png
+    keywords:
+    - java
+    - node
+    - dotnet
+    - kubernetes
+    - stakater
+    - application
+    maintainers:
+    - email: hello@stakater.com
+      name: Stakater
+    name: application
+    type: application
+    urls:
+    - https://marcowild.github.io/application-chart/application-6.0.3.tgz
+    version: 6.0.3
+generated: "2025-05-06T08:52:15.757691+02:00"
