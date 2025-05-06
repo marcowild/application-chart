@@ -754,38 +754,50 @@ secret:
   # -- (bool) Deploy additional Secret resources.
   # @section -- Secret Parameters
   enabled: false
-  # -- (object) Additional labels for Secret.
+
+  # -- (object) Additional labels applied to all Secret resources.
   # @section -- Secret Parameters
   additionalLabels:
     # key: value
-  # -- (object) Annotations for Secret.
+
+  # -- (object) Global annotations applied to all Secret resources (unless overridden per entry).
+  # Can be overridden by defining `annotations` inside individual `files` entries.
   # @section -- Secret Parameters
   annotations:
     # key: value
-  # -- (object) List of Secrets entries.
-  # Key will be used as a name suffix for the Secret.
-  # There a three allowed modes:
-  # - `data`: Data is base64 encoded by the chart
-  # - `encodedData`: Use raw values (already base64ed) inside the data map
-  # - `stringData`: Use raw values inside the stringData map
+
+  # -- (object) Map of Secret definitions.
+  # Each key is used as a name suffix to generate a unique Secret name: `<release-name>-<key>`.
+  # Each entry supports the following fields:
+  #   - `data`: A key-value map. Values will be base64 encoded by the chart.
+  #   - `encodedData`: A key-value map of already base64-encoded strings (injected as `data`).
+  #   - `stringData`: A key-value map injected as `stringData` (Kubernetes encodes it automatically).
+  #   - `annotations`: (Optional) Per-secret annotations. Overrides global `secret.annotations`.
+  # Example usage:
   # @section -- Secret Parameters
   files:
     # credentials:
+    #   annotations:
+    #     reflector.v1.k8s.emberstack.com/reflects: "reflector/db-secrets"
     #   data:
     #     secretKey1: secretValue1
     #     secretKey2: secretValue2
+
     # password:
     #   data:
     #     secretKey1: secretValue1
     #     secretKey2: secretValue2
+
     # apiKey:
     #   stringData:
     #     secretKey1: secretValue1
     #     secretKey2: secretValue2
-    # secondApiKeu:
+
+    # encodedSecrets:
     #   encodedData:
     #     secretKey1: dGVzdFZhbHVl
     #     secretKey2: dGVzdFZhbHVl
+
 
 serviceMonitor:
   # -- (bool) Deploy a ServiceMonitor (Prometheus Operator) resource.
