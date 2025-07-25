@@ -10,12 +10,11 @@ kind: Job
 metadata:
   labels:
   {{- include "application.labels" $ | nindent 4 }}
-{{- if $job.additionalLabels }}
-{{ $job.additionalLabels | indent 4 }}
+{{- with $job.additionalLabels }}
+{{ toYaml . | indent 4 }}
 {{- end }}
-{{- if $job.annotations }}
-  annotations:
-{{ $job.annotations | indent 4 }}
+{{- with $job.annotations }}
+  annotations: {{ toYaml . | nindent 4 }}
 {{- end }}
   name: {{ $name }}
   namespace: {{ template "application.namespace" $ }}
@@ -46,12 +45,10 @@ spec:
       {{- end }}
       containers:
       - name: {{ $name }}
-
         {{- $image := required (print "Undefined image repo for container '" $name "'") $job.image.repository }}
         {{- with $job.image.tag    }} {{- $image = print $image ":" . }} {{- end }}
         {{- with $job.image.digest }} {{- $image = print $image "@" . }} {{- end }}
         image: {{ $image }}
-
         {{- if $job.image.imagePullPolicy }}
         imagePullPolicy: {{ $job.image.imagePullPolicy }}
         {{ end }}
@@ -110,9 +107,12 @@ spec:
       {{- if $job.dnsConfig }}
       dnsConfig:
 {{ toYaml $job.dnsConfig | indent 8 }}
-          {{- end }}
+      {{- end }}
       {{- if $job.dnsPolicy }}
       dnsPolicy: {{ $job.dnsPolicy }}
+      {{- end }}
+      {{- with $job.hostAliases }}
+      hostAliases: {{- toYaml . | nindent 6 }}
       {{- end }}
       {{- with $job.volumes }}
       volumes:
