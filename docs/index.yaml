@@ -2,9 +2,9 @@ apiVersion: v1
 entries:
   application:
   - apiVersion: v2
-    created: "2025-05-06T08:53:34.176774+02:00"
+    created: "2025-07-25T14:52:25.532045+02:00"
     description: Generic helm chart for all kind of applications
-    digest: 00ccdc0b8e7452337b76bfc4ba7f41a615a42014e9c5e51f0cd585abc64bc61e
+    digest: 900e46983acf71e7744018926f6f4ed111752172636fcb234c602f1f6453d9ae
     home: https://github.com/stakater/application
     icon: https://github.com/stakater/ForecastleIcons/blob/master/stakater.png
     keywords:
@@ -20,6 +20,6 @@ entries:
     name: application
     type: application
     urls:
-    - https://marcowild.github.io/application-chart/application-6.0.3.tgz
-    version: 6.0.3
-generated: "2025-05-06T08:53:34.174828+02:00"
+    - https://marcowild.github.io/application-chart/application-6.5.0.tgz
+    version: 6.5.0
+generated: "2025-07-25T14:52:25.529348+02:00"

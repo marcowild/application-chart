@@ -1,0 +1,49 @@
+{{- if .Values.additionalIngress }}
+{{- $applicationNameTpl := include "application.name" . -}}
+{{- range $name, $config := .Values.additionalIngress }}
+{{- if $config.enabled }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ $applicationNameTpl }}-{{ $name }}
+  namespace: {{ include "application.namespace" $ }}
+  labels:
+  {{- include "application.labels" $ | nindent 4 }}
+{{- if $config.additionalLabels }}
+{{ toYaml $config.additionalLabels | indent 4 }}
+{{- end }}
+{{- if $config.annotations }}
+  annotations:
+{{ toYaml $config.annotations | indent 4 }}
+{{- end }}
+spec:
+{{- if $config.ingressClassName }}
+  ingressClassName: {{ $config.ingressClassName }}
+{{- end}}
+  rules:
+    {{- range $config.hosts }}
+    - host: {{ tpl .host $ }}
+      http:
+        paths:
+        {{- if .paths }}
+        {{- range .paths }}
+        - path: {{ .path }}
+          pathType: {{ default "ImplementationSpecific" (.pathType) }}
+          backend:
+            service:
+              name: {{ default $applicationNameTpl (.serviceName) }}
+              port:
+                name: {{ default "http" (.servicePort) }}
+        {{- end }}
+        {{- else }}
+        {{ fail "Specify paths for additional ingress host, check values.yaml" }}
+        {{- end }}
+    {{- end -}}
+  {{- if $config.tls }}
+  tls:
+{{ include "application.tplvalues.render" (dict "value" $config.tls "context" $) | indent 3 }}
+  {{- end -}}
+{{- end }}
+{{- end }}
+{{- end }}

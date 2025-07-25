@@ -570,6 +570,54 @@ ingress:
     #   hosts:
     #     - chart-example.local
 
+# Additional ingress resources for specialized routing (e.g., basic auth for specific paths)
+# @section -- Additional Ingress Parameters
+additionalIngress:
+  # Example additional ingress for path-specific authentication
+  # swagger-auth:
+  #   # -- (bool) Enable this additional ingress.
+  #   # @section -- Additional Ingress Parameters
+  #   enabled: false
+  #   # -- (string) Name of the ingress class.
+  #   # @section -- Additional Ingress Parameters
+  #   ingressClassName: ""
+  #   hosts:
+  #     - # -- (tpl/string) Hostname.
+  #       # @section -- Additional Ingress Parameters
+  #       host: chart-example.local
+  #       paths:
+  #       - # -- (string) Path.
+  #         # @section -- Additional Ingress Parameters
+  #         path: /api/swagger
+  #         # -- (string) Path type.
+  #         # @default -- `ImplementationSpecific`
+  #         # @section -- Additional Ingress Parameters
+  #         pathType: Prefix
+  #         # -- (string) Service name.
+  #         # @default -- `{{ include "application.name" $ }}`
+  #         # @section -- Additional Ingress Parameters
+  #         serviceName:
+  #         # -- (string) Service port.
+  #         # @default -- `http`
+  #         # @section -- Additional Ingress Parameters
+  #         servicePort:
+  #   # -- (object) Additional labels for additional ingress.
+  #   # @section -- Additional Ingress Parameters
+  #   additionalLabels:
+  #   # -- (object) Annotations for additional ingress.
+  #   # @section -- Additional Ingress Parameters
+  #   annotations:
+  #     # nginx.ingress.kubernetes.io/auth-type: basic
+  #     # nginx.ingress.kubernetes.io/auth-secret: "basic-auth-secret"
+  #     # nginx.ingress.kubernetes.io/auth-realm: "Authentication Required"
+  #   # -- (list) TLS configuration for additional ingress.
+  #   # Secrets must exist in the namespace.
+  #   # @section -- Additional Ingress Parameters
+  #   tls:
+  #     # - secretName: chart-example-tls
+  #     #   hosts:
+  #     #     - chart-example.local
+
 route:
   # -- (bool) Deploy a Route (OpenShift) resource.
   # @section -- Route Parameters
